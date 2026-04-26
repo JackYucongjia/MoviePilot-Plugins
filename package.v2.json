@@ -660,5 +660,17 @@
       "v0.2.0": "优化配置页UI布局，修复回复消息携带多余类型前缀的问题",
       "v0.1.0": "初始版本"
     }
+  },
+  "EmbyCollectionSync": {
+    "name": "Emby榜单合集同步",
+    "description": "同步TMDb榜单到Emby合集，并将缺失媒体加入MoviePilot订阅。",
+    "labels": "Emby,合集,榜单,订阅",
+    "version": "0.1.0",
+    "icon": "movie.jpg",
+    "author": "ffinly/codex",
+    "level": 2,
+    "history": {
+      "v0.1.0": "首次移植：支持TMDb榜单同步、Emby合集生成、海报注入、国产合集、无封面修复和MoviePilot订阅"
+    }
   }
 }
