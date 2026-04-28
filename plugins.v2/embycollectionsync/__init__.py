@@ -24,41 +24,105 @@ from app.schemas import MediaType, NotificationType
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-DEFAULT_CUSTOM_LISTS = [
-    {"name": "IMDb Top 250 Movies", "id": "8647021", "type": "Movie", "mp_subscribe": True},
-    {"name": "IMDb Top 250 TV Shows", "id": "8647022", "type": "Series", "mp_subscribe": False},
-    {"name": "豆瓣电影 Top 250", "id": "8647023", "type": "Movie", "mp_subscribe": True},
-]
+BUILTIN_CORE_LISTS = [{'name': 'IMDb Top 250 Movies', 'id': '8647021', 'type': 'Movie', 'mp_subscribe': True},
+ {'name': 'IMDb Top 250 TV Shows', 'id': '8647022', 'type': 'Series', 'mp_subscribe': 50},
+ {'name': '豆瓣电影 Top 250', 'id': '8647023', 'type': 'Movie', 'mp_subscribe': True},
+ {'name': "Letterboxd's Top 500 Films", 'id': '8648802', 'type': 'Movie', 'mp_subscribe': False},
+ {'name': 'TSPDT - 1000 Greatest Films', 'id': '8648821', 'type': 'Movie', 'mp_subscribe': False},
+ {'name': '豆瓣 - 一周口碑电影榜', 'id': '8648547', 'type': 'Movie', 'mp_subscribe': 3},
+ {'name': '豆瓣 - 华语口碑剧集榜', 'id': '8648548', 'type': 'Series', 'mp_subscribe': False},
+ {'name': '豆瓣 - 全球口碑剧集榜', 'id': '8648549', 'type': 'Series', 'mp_subscribe': False},
+ {'name': '豆瓣 - 实时热门电影榜', 'id': '8648550', 'type': 'Movie', 'mp_subscribe': 3},
+ {'name': '豆瓣 - 实时热门电视榜', 'id': '8648551', 'type': 'Series', 'mp_subscribe': False}]
 
-DEFAULT_DOUBAN_GENRE_LISTS = [
-    {"name": "豆瓣电影 - 剧情 - Top 20", "id": "8647681", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 喜剧 - Top 20", "id": "8647682", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 动作 - Top 20", "id": "8647683", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 爱情 - Top 20", "id": "8647684", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 科幻 - Top 20", "id": "8647685", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 动画 - Top 20", "id": "8647686", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 悬疑 - Top 20", "id": "8647687", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 惊悚 - Top 20", "id": "8647688", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 恐怖 - Top 20", "id": "8647689", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 纪录片 - Top 20", "id": "8647690", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 短片 - Top 20", "id": "8647691", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 情色 - Top 20", "id": "8647692", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 音乐 - Top 20", "id": "8647693", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 歌舞 - Top 20", "id": "8647694", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 家庭 - Top 20", "id": "8647695", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 儿童 - Top 20", "id": "8647696", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 传记 - Top 20", "id": "8647697", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 历史 - Top 20", "id": "8647698", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 战争 - Top 20", "id": "8647699", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 犯罪 - Top 20", "id": "8647700", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 西部 - Top 20", "id": "8647702", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 奇幻 - Top 20", "id": "8647703", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 冒险 - Top 20", "id": "8647704", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 灾难 - Top 20", "id": "8647705", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 武侠 - Top 20", "id": "8647706", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 古装 - Top 20", "id": "8647707", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 运动 - Top 20", "id": "8647708", "mp_subscribe": False},
-    {"name": "豆瓣电影 - 黑色电影 - Top 20", "id": "8647709", "mp_subscribe": False},
+BUILTIN_GENRE_LISTS = [{'name': '豆瓣电影 - 剧情 - Top 20', 'id': '8647681', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 剧情 - 高分经典', 'id': '8648565', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 喜剧 - 近期热门', 'id': '8648552', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 喜剧 - Top 20', 'id': '8647682', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 喜剧 - 高分经典', 'id': '8648566', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 喜剧 - 冷门佳作', 'id': '8648595', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动作 - 近期热门', 'id': '8648555', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动作 - Top 20', 'id': '8647683', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动作 - 高分经典', 'id': '8648568', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动作 - 冷门佳作', 'id': '8648597', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 爱情 - 近期热门', 'id': '8648553', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 爱情 - Top 20', 'id': '8647684', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 爱情 - 高分经典', 'id': '8648567', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 爱情 - 冷门佳作', 'id': '8648596', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 科幻 - 近期热门', 'id': '8648556', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 科幻 - Top 20', 'id': '8647685', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 科幻 - 高分经典', 'id': '8648570', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 科幻 - 冷门佳作', 'id': '8648598', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动画 - 近期热门', 'id': '8648557', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动画 - Top 20', 'id': '8647686', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动画 - 高分经典', 'id': '8648571', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 动画 - 冷门佳作', 'id': '8648599', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 悬疑 - 近期热门', 'id': '8648558', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 悬疑 - Top 20', 'id': '8647687', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 悬疑 - 高分经典', 'id': '8648572', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 悬疑 - 冷门佳作', 'id': '8648600', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 惊悚 - 近期热门', 'id': '8648560', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 惊悚 - Top 20', 'id': '8647688', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 惊悚 - 高分经典', 'id': '8648574', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 惊悚 - 冷门佳作', 'id': '8648602', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 恐怖 - 近期热门', 'id': '8648562', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 恐怖 - Top 20', 'id': '8647689', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 恐怖 - 高分经典', 'id': '8648581', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 恐怖 - 冷门佳作', 'id': '8648607', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 纪录片 - Top 20', 'id': '8647690', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 短片 - Top 20', 'id': '8647691', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 情色 - Top 20', 'id': '8647692', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 情色 - 高分经典', 'id': '8648586', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 情色 - 冷门佳作', 'id': '8648612', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 音乐 - Top 20', 'id': '8647693', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 音乐 - 高分经典', 'id': '8648578', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 音乐 - 冷门佳作', 'id': '8648604', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 歌舞 - Top 20', 'id': '8647694', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 歌舞 - 高分经典', 'id': '8648584', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 歌舞 - 冷门佳作', 'id': '8648610', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 家庭 - Top 20', 'id': '8647695', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 家庭 - 高分经典', 'id': '8648576', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 儿童 - Top 20', 'id': '8647696', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 儿童 - 高分经典', 'id': '8648577', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 传记 - 近期热门', 'id': '8648564', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 传记 - Top 20', 'id': '8647697', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 传记 - 高分经典', 'id': '8648583', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 传记 - 冷门佳作', 'id': '8648609', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 历史 - Top 20', 'id': '8647698', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 历史 - 高分经典', 'id': '8648579', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 历史 - 冷门佳作', 'id': '8648605', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 战争 - 近期热门', 'id': '8648563', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 战争 - Top 20', 'id': '8647699', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 战争 - 高分经典', 'id': '8648582', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 战争 - 冷门佳作', 'id': '8648608', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 犯罪 - 近期热门', 'id': '8648559', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 犯罪 - Top 20', 'id': '8647700', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 犯罪 - 高分经典', 'id': '8648573', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 犯罪 - 冷门佳作', 'id': '8648601', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 西部 - Top 20', 'id': '8647702', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 西部 - 高分经典', 'id': '8648588', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 奇幻 - Top 20', 'id': '8647703', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 奇幻 - 高分经典', 'id': '8648580', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 奇幻 - 冷门佳作', 'id': '8648606', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 冒险 - 近期热门', 'id': '8648561', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 冒险 - Top 20', 'id': '8647704', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 冒险 - 高分经典', 'id': '8648575', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 冒险 - 冷门佳作', 'id': '8648603', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 灾难 - Top 20', 'id': '8647705', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 灾难 - 高分经典', 'id': '8648587', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 灾难 - 冷门佳作', 'id': '8648613', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 武侠 - Top 20', 'id': '8647706', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 武侠 - 高分经典', 'id': '8648585', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 武侠 - 冷门佳作', 'id': '8648611', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 古装 - Top 20', 'id': '8647707', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 古装 - 高分经典', 'id': '8648593', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 运动 - Top 20', 'id': '8647708', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 运动 - 高分经典', 'id': '8648594', 'mp_subscribe': False},
+ {'name': '豆瓣电影 - 黑色电影 - Top 20', 'id': '8647709', 'mp_subscribe': False}]
+
+CUSTOM_LISTS_SAMPLE = [
+    {"name": "示例 - TMDb 自定义电影榜", "id": "123456", "type": "Movie", "mp_subscribe": False},
+    {"name": "示例 - 只订阅前 3 名", "id": "654321", "type": "Movie", "mp_subscribe": 3},
 ]
 
 
@@ -66,7 +130,7 @@ class EmbyCollectionSync(_PluginBase):
     plugin_name = "Emby榜单合集同步"
     plugin_desc = "同步TMDb榜单到Emby合集，并将缺失媒体加入MoviePilot订阅。"
     plugin_icon = "movie.jpg"
-    plugin_version = "0.1.0"
+    plugin_version = "0.2.0"
     plugin_author = "ffinly/codex"
     author_url = "https://github.com/ffinly/emby-collection-sync"
     plugin_config_prefix = "embycollectionsync_"
@@ -87,13 +151,17 @@ class EmbyCollectionSync(_PluginBase):
     _proxy_url = ""
     _verify_ssl = False
     _batch_size = 50
-    _sync_genre_lists = True
     _sync_domestic = True
     _fix_missing_posters = True
     _favorite_all_users = True
     _subscribe_missing = False
-    _custom_lists = DEFAULT_CUSTOM_LISTS
-    _genre_lists = DEFAULT_DOUBAN_GENRE_LISTS
+    _selected_core_list_ids = [str(item["id"]) for item in BUILTIN_CORE_LISTS]
+    _selected_genre_list_ids = [str(item["id"]) for item in BUILTIN_GENRE_LISTS]
+    _custom_lists = []
+    _mp_exclude_movie_ids = []
+    _mp_exclude_series_ids = []
+    _list_poster_mode = "library"
+    _domestic_poster_mode = "premiere"
     _path_keywords = ["国产", "华语", "Chinese"]
     _domestic_keywords = ["China", "Hong Kong", "Taiwan", "Macao", "中国", "香港", "台湾", "澳门", "CN", "HK", "TW"]
     _tmdb_domestic_codes = ["CN", "HK", "TW"]
@@ -113,13 +181,23 @@ class EmbyCollectionSync(_PluginBase):
             self._proxy_url = config.get("proxy_url") or ""
             self._verify_ssl = bool(config.get("verify_ssl"))
             self._batch_size = self.__int(config.get("batch_size"), 50)
-            self._sync_genre_lists = bool(config.get("sync_genre_lists", True))
             self._sync_domestic = bool(config.get("sync_domestic", True))
             self._fix_missing_posters = bool(config.get("fix_missing_posters", True))
             self._favorite_all_users = bool(config.get("favorite_all_users", True))
             self._subscribe_missing = bool(config.get("subscribe_missing"))
-            self._custom_lists = self.__load_json_list(config.get("custom_lists"), DEFAULT_CUSTOM_LISTS)
-            self._genre_lists = self.__load_json_list(config.get("genre_lists"), DEFAULT_DOUBAN_GENRE_LISTS)
+            self._selected_core_list_ids = self.__load_selection(
+                config.get("selected_core_list_ids"),
+                [str(item["id"]) for item in BUILTIN_CORE_LISTS]
+            )
+            self._selected_genre_list_ids = self.__load_selection(
+                config.get("selected_genre_list_ids"),
+                [str(item["id"]) for item in BUILTIN_GENRE_LISTS]
+            )
+            self._custom_lists = self.__load_json_list(config.get("custom_lists"), [])
+            self._mp_exclude_movie_ids = self.__load_lines(config.get("mp_exclude_movie_ids"), [])
+            self._mp_exclude_series_ids = self.__load_lines(config.get("mp_exclude_series_ids"), [])
+            self._list_poster_mode = config.get("list_poster_mode") or "library"
+            self._domestic_poster_mode = config.get("domestic_poster_mode") or "premiere"
             self._path_keywords = self.__load_lines(config.get("path_keywords"), self._path_keywords)
             self._domestic_keywords = self.__load_lines(config.get("domestic_keywords"), self._domestic_keywords)
             self._tmdb_domestic_codes = self.__load_lines(config.get("tmdb_domestic_codes"), self._tmdb_domestic_codes)
@@ -186,13 +264,37 @@ class EmbyCollectionSync(_PluginBase):
                         self.__switch("subscribe_missing", "缺失项加入MP订阅"),
                     ]),
                     self.__row([
-                        self.__switch("sync_genre_lists", "同步豆瓣分类榜"),
                         self.__switch("sync_domestic", "生成国产影视合集"),
                         self.__switch("fix_missing_posters", "修复无封面合集"),
+                        self.__switch("favorite_all_users", "生成合集加入所有用户收藏"),
                     ]),
-                    self.__row([self.__switch("favorite_all_users", "生成合集加入所有用户收藏")]),
-                    self.__textarea("custom_lists", "核心榜单JSON", "榜单数组：name/id/type/mp_subscribe"),
-                    self.__textarea("genre_lists", "分类榜单JSON", "豆瓣分类榜数组"),
+                    self.__row([
+                        self.__select("list_poster_mode", "榜单封面策略", [
+                            {"title": "库内最高排名", "value": "library"},
+                            {"title": "榜单第一名", "value": "list"},
+                        ], multiple=False),
+                        self.__select("domestic_poster_mode", "国产合集封面策略", [
+                            {"title": "最新上映", "value": "premiere"},
+                            {"title": "最新入库", "value": "added"},
+                        ], multiple=False),
+                    ]),
+                    self.__select(
+                        "selected_core_list_ids",
+                        "内置核心榜单",
+                        [{"title": item["name"], "value": str(item["id"])} for item in BUILTIN_CORE_LISTS],
+                    ),
+                    self.__select(
+                        "selected_genre_list_ids",
+                        "内置豆瓣分类榜单",
+                        [{"title": item["name"], "value": str(item["id"])} for item in BUILTIN_GENRE_LISTS],
+                    ),
+                    self.__textarea(
+                        "custom_lists",
+                        "自定义合集榜单JSON",
+                        json.dumps(CUSTOM_LISTS_SAMPLE, ensure_ascii=False, indent=2),
+                    ),
+                    self.__textarea("mp_exclude_movie_ids", "MP电影订阅排除TMDb ID", "每行一个电影 TMDb ID"),
+                    self.__textarea("mp_exclude_series_ids", "MP剧集订阅排除TMDb ID", "每行一个剧集 TMDb ID"),
                     self.__textarea("path_keywords", "国产电影路径关键词", "每行一个关键词"),
                     self.__textarea("domestic_keywords", "国产电影产地关键词", "每行一个关键词"),
                     self.__textarea("tmdb_domestic_codes", "国产剧TMDb产地代码", "每行一个国家/地区代码"),
@@ -210,13 +312,17 @@ class EmbyCollectionSync(_PluginBase):
             "proxy_url": "",
             "verify_ssl": False,
             "batch_size": 50,
-            "sync_genre_lists": True,
             "sync_domestic": True,
             "fix_missing_posters": True,
             "favorite_all_users": True,
             "subscribe_missing": False,
-            "custom_lists": json.dumps(DEFAULT_CUSTOM_LISTS, ensure_ascii=False, indent=2),
-            "genre_lists": json.dumps(DEFAULT_DOUBAN_GENRE_LISTS, ensure_ascii=False, indent=2),
+            "selected_core_list_ids": [str(item["id"]) for item in BUILTIN_CORE_LISTS],
+            "selected_genre_list_ids": [str(item["id"]) for item in BUILTIN_GENRE_LISTS],
+            "list_poster_mode": "library",
+            "domestic_poster_mode": "premiere",
+            "custom_lists": "[]",
+            "mp_exclude_movie_ids": "",
+            "mp_exclude_series_ids": "",
             "path_keywords": "\n".join(self._path_keywords),
             "domestic_keywords": "\n".join(self._domestic_keywords),
             "tmdb_domestic_codes": "\n".join(self._tmdb_domestic_codes),
@@ -233,7 +339,7 @@ class EmbyCollectionSync(_PluginBase):
                 f"核心榜单：{record.get('core_lists', 0)}",
                 f"分类榜单：{record.get('genre_lists', 0)}",
                 f"国产电影/剧集：{record.get('domestic_movies', 0)}/{record.get('domestic_series', 0)}",
-                f"MP订阅：新增 {record.get('mp_subscribed', 0)}，已存在 {record.get('mp_existed', 0)}，失败 {record.get('mp_failed', 0)}",
+                f"MP订阅：新增 {record.get('mp_subscribed', 0)}，已存在 {record.get('mp_existed', 0)}，排除 {record.get('mp_excluded', 0)}，失败 {record.get('mp_failed', 0)}",
                 f"封面修复：{record.get('fixed_covers', 0)}",
             ]
             items.append({
@@ -271,14 +377,17 @@ class EmbyCollectionSync(_PluginBase):
         client = self.__session()
 
         try:
-            if self._sync_genre_lists:
-                for list_info in reversed(self._genre_lists):
-                    self.__process_list(client, list_info, stats, is_genre=True)
+            core_lists = self.__selected_lists(BUILTIN_CORE_LISTS, self._selected_core_list_ids)
+            genre_lists = self.__selected_lists(BUILTIN_GENRE_LISTS, self._selected_genre_list_ids)
+            custom_lists = self.__normalized_custom_lists(self._custom_lists)
+
+            for list_info in reversed(genre_lists):
+                self.__process_list(client, list_info, stats, is_genre=True)
 
             if self._sync_domestic:
                 self.__process_domestic(client, stats)
 
-            for list_info in reversed(self._custom_lists):
+            for list_info in reversed(core_lists + custom_lists):
                 self.__process_list(client, list_info, stats, is_genre=False)
 
             if self._fix_missing_posters:
@@ -312,17 +421,25 @@ class EmbyCollectionSync(_PluginBase):
             stats["lists_report"][name] = {"is_genre": is_genre, "total": 0, "matched": 0, "missing": []}
             return
 
-        poster_path = self.__get_original_poster(client, tmdb_items[0].get("id"), tmdb_type)
         emby_items = self.__get_emby_items(client, item_type, "ProviderIds,Name")
         emby_tmdb_map = {
             str(item.get("ProviderIds", {}).get("Tmdb")): item.get("Id")
             for item in emby_items
             if item.get("ProviderIds", {}).get("Tmdb")
         }
+        poster_tmdb_id = None
+        if self._list_poster_mode == "library":
+            for item in tmdb_items:
+                if str(item.get("id")) in emby_tmdb_map:
+                    poster_tmdb_id = item.get("id")
+                    break
+        elif tmdb_items:
+            poster_tmdb_id = tmdb_items[0].get("id")
+        poster_path = self.__get_original_poster(client, poster_tmdb_id, tmdb_type)
 
         matched_ids = []
         missing_items = []
-        mp_sub_switch = bool(list_info.get("mp_subscribe"))
+        mp_sub_switch = list_info.get("mp_subscribe", False)
         for index, item in enumerate(tmdb_items, 1):
             tmdb_id = str(item.get("id") or "")
             title = item.get("title") or item.get("name") or "未知名称"
@@ -332,7 +449,13 @@ class EmbyCollectionSync(_PluginBase):
             else:
                 missing_info = f"No.{index} {title} ({year}) {{tmdb-{tmdb_id}}}"
                 missing_items.append(missing_info)
-                if self._subscribe_missing and mp_sub_switch:
+                if not self._subscribe_missing or not self.__should_subscribe(mp_sub_switch, index):
+                    continue
+                exclude_ids = self._mp_exclude_movie_ids if item_type == "Movie" else self._mp_exclude_series_ids
+                if tmdb_id in exclude_ids:
+                    stats["mp_excluded"] += 1
+                    continue
+                if self._subscribe_missing:
                     self.__subscribe_to_moviepilot(title, year, tmdb_id, item_type, stats)
 
         unique_ids = list(dict.fromkeys(matched_ids))
@@ -360,11 +483,13 @@ class EmbyCollectionSync(_PluginBase):
             except Exception:
                 continue
 
-        domestic_series.sort(key=lambda x: x.get("PremiereDate", "0000-00-00"), reverse=True)
+        sort_key = "DateCreated" if self._domestic_poster_mode == "added" else "PremiereDate"
+        domestic_series.sort(key=lambda x: x.get(sort_key, "0000-00-00"), reverse=True)
         series_poster = ""
-        if domestic_series:
-            first_tmdb = domestic_series[0].get("ProviderIds", {}).get("Tmdb")
-            series_poster = self.__get_original_poster(client, first_tmdb, "tv")
+        for series in domestic_series:
+            series_poster = self.__get_original_poster(client, series.get("ProviderIds", {}).get("Tmdb"), "tv")
+            if series_poster:
+                break
         self.__update_collection_by_name(client, "国产电视剧", [s["Id"] for s in domestic_series], "", series_poster, stats)
         stats["domestic_series"] = len(domestic_series)
 
@@ -377,11 +502,12 @@ class EmbyCollectionSync(_PluginBase):
                 for location in movie.get("ProductionLocations", [])
             )
         ]
-        domestic_movies.sort(key=lambda x: x.get("PremiereDate", "0000-00-00"), reverse=True)
+        domestic_movies.sort(key=lambda x: x.get(sort_key, "0000-00-00"), reverse=True)
         movie_poster = ""
-        if domestic_movies:
-            first_tmdb = domestic_movies[0].get("ProviderIds", {}).get("Tmdb")
-            movie_poster = self.__get_original_poster(client, first_tmdb, "movie")
+        for movie in domestic_movies:
+            movie_poster = self.__get_original_poster(client, movie.get("ProviderIds", {}).get("Tmdb"), "movie")
+            if movie_poster:
+                break
         self.__update_collection_by_name(client, "国产电影", [m["Id"] for m in domestic_movies], "", movie_poster, stats)
         stats["domestic_movies"] = len(domestic_movies)
 
@@ -486,7 +612,12 @@ class EmbyCollectionSync(_PluginBase):
             logger.error(f"更新Emby合集失败：{name} {err}")
 
     def __fix_missing_collection_posters(self, client: requests.Session, stats: Dict[str, Any]):
-        exclude_names = [item["name"] for item in self._custom_lists] + [item["name"] for item in self._genre_lists] + ["国产电影", "国产电视剧"]
+        managed_lists = (
+            self.__selected_lists(BUILTIN_CORE_LISTS, self._selected_core_list_ids)
+            + self.__selected_lists(BUILTIN_GENRE_LISTS, self._selected_genre_list_ids)
+            + self.__normalized_custom_lists(self._custom_lists)
+        )
+        exclude_names = [item["name"] for item in managed_lists] + ["国产电影", "国产电视剧"]
         collections = client.get(f"{self._emby_url}/emby/Items", params={
             "api_key": self._emby_api_key,
             "IncludeItemTypes": "BoxSet",
@@ -607,7 +738,7 @@ class EmbyCollectionSync(_PluginBase):
         except Exception:
             return []
 
-    def __get_emby_items(self, client: requests.Session, item_type: str, fields: str = "ProductionLocations,Path,ProviderIds,PremiereDate") -> List[dict]:
+    def __get_emby_items(self, client: requests.Session, item_type: str, fields: str = "ProductionLocations,Path,ProviderIds,PremiereDate,DateCreated") -> List[dict]:
         try:
             return client.get(f"{self._emby_url}/emby/Items", params={
                 "api_key": self._emby_api_key,
@@ -655,7 +786,7 @@ class EmbyCollectionSync(_PluginBase):
             *core_lines,
             f"豆瓣分类合集：生成 {genre_matched} 个",
             f"国产电影/剧集：{stats['domestic_movies']} / {stats['domestic_series']}",
-            f"MP订阅：新增 {stats['mp_subscribed']}，已存在 {stats['mp_existed']}，失败 {len(stats['mp_failed'])}",
+            f"MP订阅：新增 {stats['mp_subscribed']}，已存在 {stats['mp_existed']}，排除 {stats['mp_excluded']}，失败 {len(stats['mp_failed'])}",
             f"全员收藏人次：{stats['favorites']}",
             f"无封面合集修复：{stats['fixed_covers']}",
             f"耗时：{stats['elapsed']} 秒",
@@ -691,6 +822,7 @@ class EmbyCollectionSync(_PluginBase):
             "domestic_series": stats["domestic_series"],
             "mp_subscribed": stats["mp_subscribed"],
             "mp_existed": stats["mp_existed"],
+            "mp_excluded": stats["mp_excluded"],
             "mp_failed": len(stats["mp_failed"]),
             "fixed_covers": stats["fixed_covers"],
         })
@@ -709,13 +841,17 @@ class EmbyCollectionSync(_PluginBase):
             "proxy_url": self._proxy_url,
             "verify_ssl": self._verify_ssl,
             "batch_size": self._batch_size,
-            "sync_genre_lists": self._sync_genre_lists,
             "sync_domestic": self._sync_domestic,
             "fix_missing_posters": self._fix_missing_posters,
             "favorite_all_users": self._favorite_all_users,
             "subscribe_missing": self._subscribe_missing,
+            "selected_core_list_ids": self._selected_core_list_ids,
+            "selected_genre_list_ids": self._selected_genre_list_ids,
+            "list_poster_mode": self._list_poster_mode,
+            "domestic_poster_mode": self._domestic_poster_mode,
             "custom_lists": json.dumps(self._custom_lists, ensure_ascii=False, indent=2),
-            "genre_lists": json.dumps(self._genre_lists, ensure_ascii=False, indent=2),
+            "mp_exclude_movie_ids": "\n".join(self._mp_exclude_movie_ids),
+            "mp_exclude_series_ids": "\n".join(self._mp_exclude_series_ids),
             "path_keywords": "\n".join(self._path_keywords),
             "domestic_keywords": "\n".join(self._domestic_keywords),
             "tmdb_domestic_codes": "\n".join(self._tmdb_domestic_codes),
@@ -730,6 +866,7 @@ class EmbyCollectionSync(_PluginBase):
             "fixed_covers": 0,
             "mp_subscribed": 0,
             "mp_existed": 0,
+            "mp_excluded": 0,
             "mp_failed": [],
             "poster_failed": [],
             "lists_report": {},
@@ -747,6 +884,41 @@ class EmbyCollectionSync(_PluginBase):
             return parsed if isinstance(parsed, list) else default
         except Exception:
             return default
+
+    @staticmethod
+    def __load_selection(value: Any, default: List[str]) -> List[str]:
+        if isinstance(value, list):
+            return [str(item) for item in value if str(item)]
+        if not value:
+            return default
+        return [item.strip() for item in str(value).splitlines() if item.strip()]
+
+    @staticmethod
+    def __selected_lists(source: List[dict], selected_ids: List[str]) -> List[dict]:
+        selected = set(str(item) for item in selected_ids)
+        return [dict(item) for item in source if str(item.get("id")) in selected]
+
+    @staticmethod
+    def __normalized_custom_lists(items: List[dict]) -> List[dict]:
+        normalized = []
+        for item in items or []:
+            if not isinstance(item, dict) or not item.get("name") or not item.get("id"):
+                continue
+            normalized.append({
+                "name": str(item.get("name")),
+                "id": str(item.get("id")),
+                "type": item.get("type") if item.get("type") in ("Movie", "Series") else "Movie",
+                "mp_subscribe": item.get("mp_subscribe", False),
+            })
+        return normalized
+
+    @staticmethod
+    def __should_subscribe(policy: Any, rank: int) -> bool:
+        if policy is True:
+            return True
+        if isinstance(policy, int) and not isinstance(policy, bool):
+            return rank <= policy
+        return False
 
     @staticmethod
     def __load_lines(value: Any, default: List[str]) -> List[str]:
@@ -778,6 +950,27 @@ class EmbyCollectionSync(_PluginBase):
     @staticmethod
     def __cron(model: str, label: str, placeholder: str = "") -> dict:
         return {"component": "VCol", "props": {"cols": 12, "md": 4}, "content": [{"component": "VCronField", "props": {"model": model, "label": label, "placeholder": placeholder}}]}
+
+    @staticmethod
+    def __select(model: str, label: str, items: List[dict], multiple: bool = True) -> dict:
+        return {
+            "component": "VRow",
+            "content": [{
+                "component": "VCol",
+                "props": {"cols": 12},
+                "content": [{
+                    "component": "VSelect",
+                    "props": {
+                        "model": model,
+                        "label": label,
+                        "items": items,
+                        "multiple": multiple,
+                        "chips": multiple,
+                        "clearable": True,
+                    },
+                }],
+            }],
+        }
 
     @staticmethod
     def __textarea(model: str, label: str, placeholder: str = "") -> dict:
