@@ -1073,5 +1073,20 @@
     "history": {
       "v1.0": "初始版本，支持 IPv4/IPv6、泛域名、多记录配置、更新历史详情页"
     }
+  },
+  "EmbyCollectionSync": {
+    "name": "Emby榜单合集同步",
+    "description": "同步TMDb榜单到Emby合集，并将缺失媒体加入MoviePilot订阅。",
+    "labels": "Emby,合集,榜单,订阅",
+    "version": "0.2.1",
+    "icon": "movie.jpg",
+    "author": "ffinly/codex",
+    "level": 2,
+    "history": {
+      "v0.2.1": "同步朋友项目最新榜单：核心榜单扩展到31个，支持缺失通知精简和旧合集名称清理",
+      "v0.2.0": "同步朋友项目最新榜单：内置榜单可勾选执行，支持自定义合集榜单JSON和订阅排名阈值",
+      "v0.1.0": "首次移植：支持TMDb榜单同步、Emby合集生成、海报注入、国产合集、无封面修复和MoviePilot订阅"
+    },
+    "v2": true
   }
 }
