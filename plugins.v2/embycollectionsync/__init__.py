@@ -24,16 +24,71 @@ from app.schemas import MediaType, NotificationType
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-BUILTIN_CORE_LISTS = [{'name': 'IMDb Top 250 Movies', 'id': '8647021', 'type': 'Movie', 'mp_subscribe': True},
- {'name': 'IMDb Top 250 TV Shows', 'id': '8647022', 'type': 'Series', 'mp_subscribe': 50},
- {'name': '豆瓣电影 Top 250', 'id': '8647023', 'type': 'Movie', 'mp_subscribe': True},
- {'name': "Letterboxd's Top 500 Films", 'id': '8648802', 'type': 'Movie', 'mp_subscribe': False},
- {'name': 'TSPDT - 1000 Greatest Films', 'id': '8648821', 'type': 'Movie', 'mp_subscribe': False},
- {'name': '豆瓣 - 一周口碑电影榜', 'id': '8648547', 'type': 'Movie', 'mp_subscribe': 3},
- {'name': '豆瓣 - 华语口碑剧集榜', 'id': '8648548', 'type': 'Series', 'mp_subscribe': False},
- {'name': '豆瓣 - 全球口碑剧集榜', 'id': '8648549', 'type': 'Series', 'mp_subscribe': False},
- {'name': '豆瓣 - 实时热门电影榜', 'id': '8648550', 'type': 'Movie', 'mp_subscribe': 3},
- {'name': '豆瓣 - 实时热门电视榜', 'id': '8648551', 'type': 'Series', 'mp_subscribe': False}]
+BUILTIN_CORE_LISTS = [{'name': 'IMDb Top 250 Movies', 'id': '8647021', 'type': 'Movie', 'mp_subscribe': True, 'notify_missing': True},
+ {'name': 'IMDb Top 250 TV Shows', 'id': '8647022', 'type': 'Series', 'mp_subscribe': False, 'notify_missing': True},
+ {'name': '豆瓣电影 Top 250', 'id': '8647023', 'type': 'Movie', 'mp_subscribe': True, 'notify_missing': True},
+ {'name': 'S&S Directors - Greatest Films',
+  'id': '8649058',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': 'S&S Critics - Greatest Films',
+  'id': '8649050',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': 'AFI Top 100 (2007)', 'id': '8649041', 'type': 'Movie', 'mp_subscribe': False, 'notify_missing': False},
+ {'name': '奥斯卡历届最佳影片', 'id': '8648843', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': True},
+ {'name': '戛纳电影节金棕榈奖', 'id': '8648844', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': True},
+ {'name': '威尼斯电影节金狮奖', 'id': '8648854', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': False},
+ {'name': '柏林电影节金熊奖', 'id': '8648852', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': False},
+ {'name': '英国电影学院奖最佳影片', 'id': '8648848', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': False},
+ {'name': '金球奖最佳剧情片', 'id': '8648849', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': False},
+ {'name': '金球奖最佳音乐/喜剧片', 'id': '8648850', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': False},
+ {'name': '独立精神奖最佳长片', 'id': '8648851', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': False},
+ {'name': '多伦多电影节人民选择奖', 'id': '8648855', 'type': 'Movie', 'mp_subscribe': 1, 'notify_missing': False},
+ {'name': 'LB Top 500 Films', 'id': '8648802', 'type': 'Movie', 'mp_subscribe': False, 'notify_missing': False},
+ {'name': 'LB Top 250 Films with the Most Fans',
+  'id': '8649224',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': 'LB Top 250 Animated Films',
+  'id': '8649225',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': 'LB Top 250 Documentary Films',
+  'id': '8649231',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': "Roger Ebert's Great Movies",
+  'id': '8649219',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': 'TSPDT - 1000 Greatest Films',
+  'id': '8648821',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': '1001 Movies You Must See Before You Die',
+  'id': '8649029',
+  'type': 'Movie',
+  'mp_subscribe': False,
+  'notify_missing': False},
+ {'name': 'Criterion Collection', 'id': '8649108', 'type': 'Movie', 'mp_subscribe': False, 'notify_missing': False},
+ {'name': 'Every A24 Film', 'id': '8649217', 'type': 'Movie', 'mp_subscribe': False, 'notify_missing': True},
+ {'name': 'Every NEON Film', 'id': '8649218', 'type': 'Movie', 'mp_subscribe': False, 'notify_missing': True},
+ {'name': 'Every MUBI Film', 'id': '8649220', 'type': 'Movie', 'mp_subscribe': False, 'notify_missing': False},
+ {'name': '豆瓣 - 一周口碑电影榜', 'id': '8648547', 'type': 'Movie', 'mp_subscribe': 3, 'notify_missing': True},
+ {'name': '豆瓣 - 华语口碑剧集榜', 'id': '8648548', 'type': 'Series', 'mp_subscribe': False, 'notify_missing': True},
+ {'name': '豆瓣 - 全球口碑剧集榜', 'id': '8648549', 'type': 'Series', 'mp_subscribe': False, 'notify_missing': True},
+ {'name': '豆瓣 - 实时热门电影榜', 'id': '8648550', 'type': 'Movie', 'mp_subscribe': 3, 'notify_missing': False},
+ {'name': '豆瓣 - 实时热门电视榜', 'id': '8648551', 'type': 'Series', 'mp_subscribe': False, 'notify_missing': False}]
+
+OLD_COLLECTION_NAMES = {'LB Top 500 Films': ["Letterboxd's Top 500 Films"]}
 
 BUILTIN_GENRE_LISTS = [{'name': '豆瓣电影 - 剧情 - Top 20', 'id': '8647681', 'mp_subscribe': False},
  {'name': '豆瓣电影 - 剧情 - 高分经典', 'id': '8648565', 'mp_subscribe': False},
@@ -121,8 +176,8 @@ BUILTIN_GENRE_LISTS = [{'name': '豆瓣电影 - 剧情 - Top 20', 'id': '8647681
  {'name': '豆瓣电影 - 黑色电影 - Top 20', 'id': '8647709', 'mp_subscribe': False}]
 
 CUSTOM_LISTS_SAMPLE = [
-    {"name": "示例 - TMDb 自定义电影榜", "id": "123456", "type": "Movie", "mp_subscribe": False},
-    {"name": "示例 - 只订阅前 3 名", "id": "654321", "type": "Movie", "mp_subscribe": 3},
+    {"name": "示例 - TMDb 自定义电影榜", "id": "123456", "type": "Movie", "mp_subscribe": False, "notify_missing": True},
+    {"name": "示例 - 只订阅前 3 名", "id": "654321", "type": "Movie", "mp_subscribe": 3, "notify_missing": False},
 ]
 
 
@@ -130,7 +185,7 @@ class EmbyCollectionSync(_PluginBase):
     plugin_name = "Emby榜单合集同步"
     plugin_desc = "同步TMDb榜单到Emby合集，并将缺失媒体加入MoviePilot订阅。"
     plugin_icon = "movie.jpg"
-    plugin_version = "0.2.0"
+    plugin_version = "0.2.1"
     plugin_author = "ffinly/codex"
     author_url = "https://github.com/ffinly/emby-collection-sync"
     plugin_config_prefix = "embycollectionsync_"
@@ -418,7 +473,13 @@ class EmbyCollectionSync(_PluginBase):
         logger.info(f"同步TMDb榜单：{name}")
         tmdb_items, list_desc = self.__fetch_tmdb_list_data(client, list_id)
         if not tmdb_items:
-            stats["lists_report"][name] = {"is_genre": is_genre, "total": 0, "matched": 0, "missing": []}
+            stats["lists_report"][name] = {
+                "is_genre": is_genre,
+                "total": 0,
+                "matched": 0,
+                "missing": [],
+                "notify_missing": list_info.get("notify_missing", True),
+            }
             return
 
         emby_items = self.__get_emby_items(client, item_type, "ProviderIds,Name")
@@ -467,6 +528,7 @@ class EmbyCollectionSync(_PluginBase):
             "total": len(tmdb_items),
             "matched": len(matched_ids),
             "missing": missing_items,
+            "notify_missing": list_info.get("notify_missing", True),
         }
 
     def __process_domestic(self, client: requests.Session, stats: Dict[str, Any]):
@@ -577,11 +639,10 @@ class EmbyCollectionSync(_PluginBase):
             search_res = client.get(f"{self._emby_url}/emby/Items", params={
                 "api_key": self._emby_api_key,
                 "IncludeItemTypes": "BoxSet",
-                "SearchTerm": name,
                 "Recursive": True,
             }, timeout=15).json()
-            existing = next((item for item in search_res.get("Items", []) if item.get("Name") == name), None)
-            if existing:
+            target_names = {name, *OLD_COLLECTION_NAMES.get(name, [])}
+            for existing in [item for item in search_res.get("Items", []) if item.get("Name") in target_names]:
                 client.delete(f"{self._emby_url}/emby/Items/{existing['Id']}", params={"api_key": self._emby_api_key}, timeout=15)
 
             create_res = client.post(f"{self._emby_url}/emby/Collections", params={
@@ -793,10 +854,11 @@ class EmbyCollectionSync(_PluginBase):
         ]
         for list_name, data in stats["lists_report"].items():
             if not data.get("is_genre") and data["missing"]:
-                lines.append(f"\n【{list_name} 缺失清单】")
-                lines.extend([f"- {item}" for item in data["missing"][:15]])
-                if len(data["missing"]) > 15:
-                    lines.append(f"- ... 等共 {len(data['missing'])} 部")
+                if data.get("notify_missing", True):
+                    lines.append(f"\n【{list_name} 缺失清单】")
+                    lines.extend([f"- {item}" for item in data["missing"][:15]])
+                    if len(data["missing"]) > 15:
+                        lines.append(f"- ... 等共 {len(data['missing'])} 部")
         if genre_missing:
             lines.append("\n【豆瓣分类缺失概览】\n" + " | ".join(genre_missing))
         if stats["mp_failed"]:
@@ -909,6 +971,7 @@ class EmbyCollectionSync(_PluginBase):
                 "id": str(item.get("id")),
                 "type": item.get("type") if item.get("type") in ("Movie", "Series") else "Movie",
                 "mp_subscribe": item.get("mp_subscribe", False),
+                "notify_missing": item.get("notify_missing", True),
             })
         return normalized
 
